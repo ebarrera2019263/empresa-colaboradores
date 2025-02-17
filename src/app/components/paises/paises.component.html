@@ -1,1 +1,11 @@
-<p>paises works!</p>
+<h2>Países</h2>
+<form (ngSubmit)="addPais()">
+    <input [(ngModel)]="nuevoPais" name="pais" placeholder="Nombre del país" />
+    <button type="submit">Agregar</button>
+  </form>
+<ul>
+  <li *ngFor="let pais of paises">
+    {{ pais.nombre }}
+    <button (click)="deletePais(pais.id)">Eliminar</button>
+  </li>
+</ul>

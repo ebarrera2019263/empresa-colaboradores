@@ -9,8 +9,8 @@ export class SupabaseService {
 
   constructor() {
     this.supabase = createClient(
-      'URL_SUPABASE', 
-      'CLAVE_PUBLICA_SUPABASE' 
+      'https://bljhyxvmvcaczcsniqrx.supabase.co', 
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJsamh5eHZtdmNhY3pjc25pcXJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk4MjMzMDcsImV4cCI6MjA1NTM5OTMwN30.k9LY8aD5OlvRMHTyrsEZrWS812Aru3HkoR10HDV9Sos' 
     );
   }
 
