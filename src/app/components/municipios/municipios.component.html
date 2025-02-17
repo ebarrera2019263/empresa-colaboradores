@@ -1,1 +1,12 @@
-<p>municipios works!</p>
+<h2>Municipios</h2>
+<form (ngSubmit)="addMunicipio()">
+  <input [(ngModel)]="nuevoMunicipio.nombre" name="nombre" placeholder="Nombre del municipio" />
+  <input [(ngModel)]="nuevoMunicipio.departamento_id" name="departamento_id" placeholder="ID del departamento" type="number" />
+  <button type="submit">Agregar</button>
+</form>
+<ul>
+  <li *ngFor="let municipio of municipios">
+    {{ municipio.nombre }} (Departamento ID: {{ municipio.departamento_id }})
+    <button (click)="deleteMunicipio(municipio.id)">Eliminar</button>
+  </li>
+</ul>

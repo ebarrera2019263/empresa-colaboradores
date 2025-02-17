@@ -1,1 +1,16 @@
-<p>empresas works!</p>
+<h2>Empresas</h2>
+<form (ngSubmit)="addEmpresa()">
+  <input [(ngModel)]="nuevaEmpresa.nit" name="nit" placeholder="NIT" />
+  <input [(ngModel)]="nuevaEmpresa.razon_social" name="razon_social" placeholder="Razón Social" />
+  <input [(ngModel)]="nuevaEmpresa.nombre_comercial" name="nombre_comercial" placeholder="Nombre Comercial" />
+  <input [(ngModel)]="nuevaEmpresa.telefono" name="telefono" placeholder="Teléfono" />
+  <input [(ngModel)]="nuevaEmpresa.email" name="email" placeholder="Email" />
+  <input [(ngModel)]="nuevaEmpresa.municipio_id" name="municipio_id" placeholder="Municipio ID" type="number" />
+  <button type="submit">Agregar</button>
+</form>
+<ul>
+  <li *ngFor="let empresa of empresas">
+    {{ empresa.nombre_comercial }} - {{ empresa.razon_social }}
+    <button (click)="deleteEmpresa(empresa.id)">Eliminar</button>
+  </li>
+</ul>

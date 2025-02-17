@@ -1,1 +1,12 @@
-<p>departamentos works!</p>
+<h2>Departamentos</h2>
+<form (ngSubmit)="addDepartamento()">
+  <input [(ngModel)]="nuevoDepartamento.nombre" name="nombre" placeholder="Nombre del departamento" />
+  <input [(ngModel)]="nuevoDepartamento.pais_id" name="pais_id" placeholder="ID del país" type="number" />
+  <button type="submit">Agregar</button>
+</form>
+<ul>
+  <li *ngFor="let departamento of departamentos">
+    {{ departamento.nombre }} (País ID: {{ departamento.pais_id }})
+    <button (click)="deleteDepartamento(departamento.id)">Eliminar</button>
+  </li>
+</ul>

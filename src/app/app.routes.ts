@@ -11,5 +11,5 @@ export const routes: Routes = [
   { path: 'municipios', component: MunicipiosComponent },
   { path: 'empresas', component: EmpresasComponent },
   { path: 'colaboradores', component: ColaboradoresComponent },
-  { path: '', redirectTo: '/paises', pathMatch: 'full' }, // Ruta por defecto
+  { path: '', redirectTo: '/paises', pathMatch: 'full' },
 ];
