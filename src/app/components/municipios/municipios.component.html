@@ -1,12 +1,89 @@
-<h2>Municipios</h2>
-<form (ngSubmit)="addMunicipio()">
-  <input [(ngModel)]="nuevoMunicipio.nombre" name="nombre" placeholder="Nombre del municipio" />
-  <input [(ngModel)]="nuevoMunicipio.departamento_id" name="departamento_id" placeholder="ID del departamento" type="number" />
-  <button type="submit">Agregar</button>
-</form>
-<ul>
-  <li *ngFor="let municipio of municipios">
-    {{ municipio.nombre }} (Departamento ID: {{ municipio.departamento_id }})
-    <button (click)="deleteMunicipio(municipio.id)">Eliminar</button>
-  </li>
-</ul>
+<div class="flex min-h-screen min-w-full justify-center items-center bg-gray-100 p-4">
+  <div class="w-full max-w-2xl bg-white rounded-lg shadow-lg p-6">
+    <!-- Título -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Municipios</h2>
+
+    <!-- Formulario para agregar municipio -->
+    <form (ngSubmit)="addMunicipio()" class="mb-6">
+      <div class="grid grid-cols-1 gap-4">
+        <div class="relative">
+          <input
+            [(ngModel)]="nuevoMunicipio.nombre"
+            name="nombre"
+            type="text"
+            class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-300 focus:border-purple-500"
+            placeholder=" "
+          />
+          <label
+            class="absolute text-gray-500 text-base duration-150 transform -translate-y-3 top-5 z-10 origin-[0] left-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
+          >
+            Nombre del municipio
+          </label>
+          <svg
+            class="absolute top-6 left-4"
+            fill="none"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+            />
+          </svg>
+        </div>
+        <div class="relative">
+          <input
+            [(ngModel)]="nuevoMunicipio.departamento_id"
+            name="departamento_id"
+            type="number"
+            class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-300 focus:border-purple-500"
+            placeholder=" "
+          />
+          <label
+            class="absolute text-gray-500 text-base duration-150 transform -translate-y-3 top-5 z-10 origin-[0] left-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
+          >
+            ID del departamento
+          </label>
+          <svg
+            class="absolute top-6 left-4"
+            fill="none"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          </svg>
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="mt-4 bg-purple-500 text-white w-full p-3 rounded-lg hover:bg-purple-600 transition duration-300"
+      >
+        Agregar Municipio
+      </button>
+    </form>
+
+    <!-- Lista de municipios -->
+    <ul class="space-y-4">
+      <li *ngFor="let municipio of municipios" class="bg-gray-50 p-4 rounded-lg shadow-sm flex justify-between items-center">
+        <span class="text-gray-700">{{ municipio.nombre }} (Departamento ID: {{ municipio.departamento_id }})</span>
+        <button
+          (click)="deleteMunicipio(municipio.id)"
+          class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition duration-300"
+        >
+          Eliminar
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

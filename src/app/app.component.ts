@@ -12,3 +12,7 @@ import { NavbarComponent } from "./components/navbar/navbar.component";
 export class AppComponent {
   title = 'empresa-colaboradores';
 }
+
+
+
+
