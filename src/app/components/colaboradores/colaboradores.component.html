@@ -1,1 +1,91 @@
-<p>colaboradores works!</p>
+<div class="p-4">
+    <h2 class="text-2xl font-bold mb-4">Colaboradores</h2>
+  
+    <!-- Formulario para agregar colaboradores -->
+    <form (ngSubmit)="addColaborador()" class="mb-6">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <input
+          [(ngModel)]="nuevoColaborador.nombre_completo"
+          name="nombre_completo"
+          placeholder="Nombre completo"
+          class="p-2 border rounded"
+          required
+        />
+        <input
+          [(ngModel)]="nuevoColaborador.edad"
+          name="edad"
+          placeholder="Edad"
+          type="number"
+          class="p-2 border rounded"
+          required
+        />
+        <input
+          [(ngModel)]="nuevoColaborador.telefono"
+          name="telefono"
+          placeholder="Teléfono"
+          class="p-2 border rounded"
+          required
+        />
+        <input
+          [(ngModel)]="nuevoColaborador.email"
+          name="email"
+          placeholder="Email"
+          type="email"
+          class="p-2 border rounded"
+          required
+        />
+        <input
+          [(ngModel)]="nuevoColaborador.empresa_id"
+          name="empresa_id"
+          placeholder="ID de la empresa"
+          type="number"
+          class="p-2 border rounded"
+          required
+        />
+      </div>
+      <button
+        type="submit"
+        class="mt-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+      >
+        Agregar Colaborador
+      </button>
+    </form>
+  
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMessage" class="text-red-500 mb-4">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Lista de colaboradores -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border">Nombre Completo</th>
+            <th class="py-2 px-4 border">Edad</th>
+            <th class="py-2 px-4 border">Teléfono</th>
+            <th class="py-2 px-4 border">Email</th>
+            <th class="py-2 px-4 border">Empresa ID</th>
+            <th class="py-2 px-4 border">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let colaborador of colaboradores" class="hover:bg-gray-50">
+            <td class="py-2 px-4 border">{{ colaborador.nombre_completo }}</td>
+            <td class="py-2 px-4 border">{{ colaborador.edad }}</td>
+            <td class="py-2 px-4 border">{{ colaborador.telefono }}</td>
+            <td class="py-2 px-4 border">{{ colaborador.email }}</td>
+            <td class="py-2 px-4 border">{{ colaborador.empresa_id }}</td>
+            <td class="py-2 px-4 border">
+              <button
+                (click)="deleteColaborador(colaborador.id)"
+                class="bg-red-500 text-white p-1 rounded hover:bg-red-600"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
