@@ -1,3 +1,4 @@
+// dashboard.component.ts
 import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { CommonModule } from '@angular/common';
@@ -26,15 +27,14 @@ export class DashboardComponent implements OnInit {
       .getSupabaseClient()
       .from('empresas')
       .select('*');
+
     if (error) {
       console.error('Error al cargar empresas:', error);
       this.errorMessage = 'Error al cargar empresas.';
     } else {
       this.empresas = data || [];
       this.errorMessage = null;
-
     }
-    console.log(this.empresas);
   }
 
   async loadColaboradores() {
@@ -42,6 +42,7 @@ export class DashboardComponent implements OnInit {
       .getSupabaseClient()
       .from('colaboradores')
       .select('*');
+
     if (error) {
       console.error('Error al cargar colaboradores:', error);
       this.errorMessage = 'Error al cargar colaboradores.';
