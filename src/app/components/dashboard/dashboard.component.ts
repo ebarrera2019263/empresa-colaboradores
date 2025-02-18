@@ -32,7 +32,9 @@ export class DashboardComponent implements OnInit {
     } else {
       this.empresas = data || [];
       this.errorMessage = null;
+
     }
+    console.log(this.empresas);
   }
 
   async loadColaboradores() {
