@@ -12,15 +12,23 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   async canActivate(): Promise<boolean> {
-    const { data: { session } } = await this.supabaseService
-      .getSupabaseClient()
-      .auth.getSession();
+    try {
+      // Verificar si hay una sesión activa
+      const { data: sessionData, error } = await this.supabaseService
+        .getSupabaseClient()
+        .auth.getSession();
 
-    if (!session) {
+      if (error || !sessionData?.session?.user) {
+        console.warn('No hay sesión activa, redirigiendo al login...');
+        this.router.navigate(['/login']);
+        return false;
+      }
+
+      return true;
+    } catch (err) {
+      console.error('Error en AuthGuard:', err);
       this.router.navigate(['/login']);
       return false;
     }
-
-    return true;
   }
 }

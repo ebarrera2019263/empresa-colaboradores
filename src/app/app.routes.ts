@@ -11,13 +11,9 @@ import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'empresas', component: EmpresasComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'paises', component: PaisesComponent, canActivate: [AuthGuard] },
-  { path: 'departamentos', component: DepartamentosComponent, canActivate: [AuthGuard] },
-  { path: 'municipios', component: MunicipiosComponent, canActivate: [AuthGuard] },
-  { path: 'empresas', component: EmpresasComponent, canActivate: [AuthGuard] },
-  { path: 'colaboradores', component: ColaboradoresComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent }, 
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/dashboard' },
 ];
