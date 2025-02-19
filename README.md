@@ -1,59 +1,62 @@
-# EmpresaColaboradores
+# Gestión de Empresas y Colaboradores
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.7.
+Este proyecto es una aplicación web que permite la gestión de empresas y colaboradores. Fue desarrollado para el departamento de recursos humanos con el objetivo de registrar y administrar los colaboradores junto con el detalle de la empresa a la que pertenecen.
 
-## Development server
+## Funcionalidades
 
-To start a local development server, run:
+### 📌 Empresas
+- Crear, leer, actualizar y eliminar (CRUD) empresas.
+- Cada empresa tiene los siguientes atributos:
+  - 📍 **Geografía:** País, departamento y municipio.
+  - 🔢 **NIT**
+  - 🏢 **Razón social**
+  - 🏷 **Nombre comercial**
+  - 📞 **Teléfono**
+  - 📧 **Correo electrónico**
+- Opción para asignar una empresa a un municipio mediante un **combobox**.
 
-```bash
-ng serve
-```
+### 📌 Colaboradores
+- CRUD de colaboradores, permitiendo la gestión de empleados de las empresas.
+- Cada colaborador tiene los siguientes atributos:
+  - 🏷 **Nombre completo**
+  - 🎂 **Edad**
+  - 📞 **Teléfono**
+  - 📧 **Correo electrónico**
+  - 🏢 **Empresa** (seleccionada desde un **combobox** con empresas disponibles).
+- Modal para editar la información de los colaboradores.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 🛠 Otras características
+- **Buscador** para filtrar empresas y colaboradores en tiempo real.
+- **Alertas tipo toast** para notificaciones al usuario (creación, actualización y eliminación).
+- **Autenticación** para el inicio de sesión con credenciales de administrador.
+- **Diseño responsivo** utilizando Tailwind CSS.
+- **Flujo de mantenimientos**:
+  1. Crear municipios y empresas.
+  2. Registrar colaboradores asignándolos a una empresa.
+  3. Editar y eliminar registros según sea necesario.
 
-## Code scaffolding
+## 🔑 Credenciales de Acceso
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **Correo:** alamedagta21@gmail.com
+- **Contraseña:** `Admin12345!`
 
-```bash
-ng generate component component-name
-```
+## ⚙️ Tecnologías utilizadas
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- **Angular**
+- **Supabase (Base de datos y autenticación)**
+- **Tailwind CSS**
+- **TypeScript**
+- **HTML & CSS**
 
-```bash
-ng generate --help
-```
+## 📂 Estructura del Proyecto
 
-## Building
+1. **Clonar el repositorio**
+   ```sh
+   git clone https://github.com/usuario/repo.git
+   cd repo
 
-To build the project run:
+   npm install
 
-```bash
-ng build
-```
+   ng serve
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+   http://localhost:4200
