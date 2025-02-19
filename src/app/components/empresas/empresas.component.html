@@ -1,51 +1,19 @@
 <div class="flex min-h-screen min-w-full justify-center items-center bg-gray-100 p-4">
   <div class="w-full max-w-2xl bg-white rounded-lg shadow-lg p-6">
-    <!-- Título -->
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Empresas</h2>
 
-    <!-- Formulario para agregar empresa -->
     <form (ngSubmit)="addEmpresa()" class="mb-6">
       <div class="grid grid-cols-1 gap-4">
         <div class="relative">
-          <input
-            [(ngModel)]="nuevaEmpresa.nit"
-            name="nit"
-            type="text"
-            class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-300 focus:border-purple-500"
-            placeholder=" "
-          />
-          <label
-            class="absolute text-gray-500 text-base duration-150 transform -translate-y-3 top-5 z-10 origin-[0] left-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
-          >
+          <input [(ngModel)]="nuevaEmpresa.nit" name="nit" type="text" class="peer w-full p-4 bg-white border-2 rounded-md outline-none border-gray-300 focus:border-purple-500" placeholder=" " />
+          <label class="absolute text-gray-500 text-base transform -translate-y-3 top-5 left-10 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500">
             NIT
           </label>
         </div>
         <div class="relative">
-          <input
-            [(ngModel)]="nuevaEmpresa.razon_social"
-            name="razon_social"
-            type="text"
-            class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-300 focus:border-purple-500"
-            placeholder=" "
-          />
-          <label
-            class="absolute text-gray-500 text-base duration-150 transform -translate-y-3 top-5 z-10 origin-[0] left-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
-          >
+          <input [(ngModel)]="nuevaEmpresa.razon_social" name="razon_social" type="text" class="peer w-full p-4 bg-white border-2 rounded-md outline-none border-gray-300 focus:border-purple-500" placeholder=" " />
+          <label class="absolute text-gray-500 text-base transform -translate-y-3 top-5 left-10 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500">
             Razón Social
-          </label>
-        </div>
-        <div class="relative">
-          <input
-            [(ngModel)]="nuevaEmpresa.nombre_comercial"
-            name="nombre_comercial"
-            type="text"
-            class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-300 focus:border-purple-500"
-            placeholder=" "
-          />
-          <label
-            class="absolute text-gray-500 text-base duration-150 transform -translate-y-3 top-5 z-10 origin-[0] left-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
-          >
-            Nombre Comercial
           </label>
         </div>
         <div class="relative">
@@ -77,39 +45,56 @@
           </label>
         </div>
         <div class="relative">
-          <input
-            [(ngModel)]="nuevaEmpresa.municipio_id"
-            name="municipio_id"
-            type="number"
-            class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-300 focus:border-purple-500"
-            placeholder=" "
-          />
-          <label
-            class="absolute text-gray-500 text-base duration-150 transform -translate-y-3 top-5 z-10 origin-[0] left-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
-          >
-            Municipio ID
-          </label>
+          <select [(ngModel)]="nuevaEmpresa.municipio_id" name="municipio_id" class="peer w-full p-4 bg-white border-2 rounded-md outline-none border-gray-300 focus:border-purple-500">
+            <option value="" disabled selected>Seleccione un municipio</option>
+            <option *ngFor="let municipio of municipios" [value]="municipio.id">
+              {{ municipio.nombre }}
+            </option>
+          </select>
         </div>
       </div>
-      <button
-        type="submit"
-        class="mt-4 bg-purple-500 text-white w-full p-3 rounded-lg hover:bg-purple-600 transition duration-300"
-      >
+
+      <button type="submit" class="mt-4 bg-purple-500 text-white w-full p-3 rounded-lg hover:bg-purple-600 transition duration-300">
         Agregar Empresa
       </button>
     </form>
 
-    <!-- Lista de empresas -->
     <ul class="space-y-4">
       <li *ngFor="let empresa of empresas" class="bg-gray-50 p-4 rounded-lg shadow-sm flex justify-between items-center">
-        <span class="text-gray-700">{{ empresa.nombre_comercial }} - {{ empresa.razon_social }}</span>
-        <button
-          (click)="deleteEmpresa(empresa.id)"
-          class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition duration-300"
-        >
-          Eliminar
-        </button>
+        <span class="text-gray-700">
+          {{ empresa.nombre_comercial }} - {{ empresa.razon_social }} (Municipio: {{ getNombreMunicipio(empresa.municipio_id) }})
+        </span>
+        <div>
+          <button (click)="openModal(empresa)" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 mr-2">
+            Editar
+          </button>
+          <button (click)="deleteEmpresa(empresa.id)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
+            Eliminar
+          </button>
+        </div>
       </li>
     </ul>
+  </div>
+</div>
+
+<!-- Modal de edición -->
+<div *ngIf="isModalOpen" class="fixed inset-0 bg-gray-500/75 flex justify-center items-center">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+    <h3 class="text-lg font-semibold mb-4">Editar Empresa</h3>
+
+    <label class="block mb-2">Nombre Comercial:</label>
+    <input [(ngModel)]="empresaEditando.nombre_comercial" class="w-full p-2 border rounded-md mb-4" />
+
+    <label class="block mb-2">Municipio:</label>
+    <select [(ngModel)]="empresaEditando.municipio_id" class="w-full p-2 border rounded-md mb-4">
+      <option *ngFor="let municipio of municipios" [value]="municipio.id">
+        {{ municipio.nombre }}
+      </option>
+    </select>
+
+    <div class="flex justify-end">
+      <button (click)="editEmpresa()" class="bg-green-500 text-white px-4 py-2 rounded mr-2">Guardar</button>
+      <button (click)="closeModal()" class="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
+    </div>
   </div>
 </div>

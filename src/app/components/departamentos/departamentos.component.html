@@ -9,58 +9,67 @@
           [(ngModel)]="nuevoDepartamento.nombre"
           name="nombre"
           type="text"
-          class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-300 focus:border-purple-500"
+          class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition border-gray-300 focus:border-purple-500"
           placeholder=" "
         />
-        <label
-          class="absolute text-gray-500 text-base duration-150 transform -translate-y-3 top-5 z-10 origin-[0] left-10
-                 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
-        >
+        <label class="absolute text-gray-500 text-base transform -translate-y-3 top-5 left-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500">
           Nombre del departamento
         </label>
       </div>
 
       <div class="relative">
-        <input
-          [(ngModel)]="nuevoDepartamento.pais_id"
-          name="pais_id"
-          type="number"
-          class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-300 focus:border-purple-500"
-          placeholder=" "
-        />
-        <label
-          class="absolute text-gray-500 text-base duration-150 transform -translate-y-3 top-5 z-10 origin-[0] left-10
-                 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
-        >
-          ID del país
+        <select [(ngModel)]="nuevoDepartamento.pais_id" name="pais_id" class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition border-gray-300 focus:border-purple-500">
+          <option value="" disabled selected>Seleccione un país</option>
+          <option *ngFor="let pais of paises" [value]="pais.id">
+            {{ pais.nombre }}
+          </option>
+        </select>
+        <label class="absolute text-gray-500 text-base transform -translate-y-3 top-5 left-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500">
+          Seleccionar país
         </label>
       </div>
     </div>
-    <button
-      type="submit"
-      class="mt-4 bg-purple-500 text-white w-full p-3 rounded-lg hover:bg-purple-600 transition duration-300"
-    >
+    <button type="submit" class="mt-4 bg-purple-500 text-white w-full p-3 rounded-lg hover:bg-purple-600 transition duration-300">
       Agregar
     </button>
   </form>
 
   <!-- Lista de departamentos -->
   <ul class="divide-y divide-gray-200">
-    <li
-      *ngFor="let departamento of departamentos"
-      class="flex items-center justify-between p-4 hover:bg-gray-50"
-    >
+    <li *ngFor="let departamento of departamentos" class="flex items-center justify-between p-4 hover:bg-gray-50">
       <span class="font-medium">
-        {{ departamento.nombre }} (País ID: {{ departamento.pais_id }})
+        {{ departamento.nombre }} (País: {{ getNombrePais(departamento.pais_id) }})
       </span>
-      <button
-        (click)="deleteDepartamento(departamento.id)"
-        class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-      >
-        Eliminar
-      </button>
+      <div>
+        <button (click)="openModal(departamento)" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 mr-2">
+          Editar
+        </button>
+        <button (click)="deleteDepartamento(departamento.id)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
+          Eliminar
+        </button>
+      </div>
     </li>
   </ul>
+</div>
+
+<!-- Modal de edición -->
+<div *ngIf="isModalOpen" class="fixed inset-0 bg-gray-500/75 flex justify-center items-center">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+    <h3 class="text-lg font-semibold mb-4">Editar Departamento</h3>
+
+    <label class="block mb-2">Nombre del departamento:</label>
+    <input [(ngModel)]="departamentoEditando.nombre" class="w-full p-2 border rounded-md mb-4" />
+
+    <label class="block mb-2">País:</label>
+    <select [(ngModel)]="departamentoEditando.pais_id" class="w-full p-2 border rounded-md mb-4">
+      <option *ngFor="let pais of paises" [value]="pais.id">
+        {{ pais.nombre }}
+      </option>
+    </select>
+
+    <div class="flex justify-end">
+      <button (click)="editDepartamento()" class="bg-green-500 text-white px-4 py-2 rounded mr-2">Guardar</button>
+      <button (click)="closeModal()" class="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
+    </div>
+  </div>
 </div>

@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ColaboradoresComponent implements OnInit {
   colaboradores: any[] = [];
+  empresas: any[] = [];
   nuevoColaborador = {
     nombre_completo: '',
     edad: null,
@@ -19,12 +20,14 @@ export class ColaboradoresComponent implements OnInit {
     email: '',
     empresa_id: null,
   };
-  errorMessage: string | null = null;
+  isModalOpen = false;
+  colaboradorEditando: any = null;
 
   constructor(private supabase: SupabaseService) {}
 
   async ngOnInit() {
     await this.loadColaboradores();
+    await this.loadEmpresas();
   }
 
   async loadColaboradores() {
@@ -32,13 +35,17 @@ export class ColaboradoresComponent implements OnInit {
       .getSupabaseClient()
       .from('colaboradores')
       .select('*');
-    if (error) {
-      console.error('Error al cargar colaboradores:', error);
-      this.errorMessage = 'Error al cargar colaboradores.';
-    } else {
-      this.colaboradores = data || [];
-      this.errorMessage = null;
-    }
+    if (error) console.error('Error al cargar colaboradores:', error);
+    else this.colaboradores = data || [];
+  }
+
+  async loadEmpresas() {
+    const { data, error } = await this.supabase
+      .getSupabaseClient()
+      .from('empresas')
+      .select('id, nombre_comercial');
+    if (error) console.error('Error al cargar empresas:', error);
+    else this.empresas = data || [];
   }
 
   async addColaborador() {
@@ -48,20 +55,15 @@ export class ColaboradoresComponent implements OnInit {
       !this.nuevoColaborador.telefono ||
       !this.nuevoColaborador.email ||
       !this.nuevoColaborador.empresa_id
-    ) {
-      this.errorMessage = 'Todos los campos son obligatorios.';
-      return;
-    }
+    ) return;
 
-    const { data, error } = await this.supabase
+    const { error } = await this.supabase
       .getSupabaseClient()
       .from('colaboradores')
       .insert([this.nuevoColaborador]);
 
-    if (error) {
-      console.error('Error al agregar colaborador:', error);
-      this.errorMessage = 'Error al agregar colaborador. Verifica los datos.';
-    } else {
+    if (error) console.error('Error al agregar colaborador:', error);
+    else {
       this.nuevoColaborador = {
         nombre_completo: '',
         edad: null,
@@ -69,7 +71,6 @@ export class ColaboradoresComponent implements OnInit {
         email: '',
         empresa_id: null,
       };
-      this.errorMessage = null;
       await this.loadColaboradores();
     }
   }
@@ -80,10 +81,51 @@ export class ColaboradoresComponent implements OnInit {
       .from('colaboradores')
       .delete()
       .eq('id', id);
-    if (error) {
-      console.error('Error al eliminar colaborador:', error);
-      this.errorMessage = 'Error al eliminar colaborador.';
-    } else {
+    if (error) console.error('Error al eliminar colaborador:', error);
+    else await this.loadColaboradores();
+  }
+
+  getNombreEmpresa(empresa_id: number): string {
+    const empresa = this.empresas.find(e => e.id === empresa_id);
+    return empresa ? empresa.nombre_comercial : 'Desconocida';
+  }
+
+  openModal(colaborador: any) {
+    console.log('Abriendo modal para:', colaborador);
+    this.colaboradorEditando = { ...colaborador };
+    this.isModalOpen = true;
+  }
+  
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.colaboradorEditando = null;
+  }
+
+  async editColaborador() {
+    if (
+      !this.colaboradorEditando.nombre_completo ||
+      !this.colaboradorEditando.edad ||
+      !this.colaboradorEditando.telefono ||
+      !this.colaboradorEditando.email ||
+      !this.colaboradorEditando.empresa_id
+    ) return;
+
+    const { error } = await this.supabase
+      .getSupabaseClient()
+      .from('colaboradores')
+      .update({
+        nombre_completo: this.colaboradorEditando.nombre_completo,
+        edad: this.colaboradorEditando.edad,
+        telefono: this.colaboradorEditando.telefono,
+        email: this.colaboradorEditando.email,
+        empresa_id: this.colaboradorEditando.empresa_id,
+      })
+      .eq('id', this.colaboradorEditando.id);
+
+    if (error) console.error('Error al actualizar colaborador:', error);
+    else {
+      this.closeModal();
       await this.loadColaboradores();
     }
   }

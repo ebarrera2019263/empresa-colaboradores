@@ -11,16 +11,17 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./paises.component.css'],
 })
 export class PaisesComponent implements OnInit {
-  paises: any[] = []; // Lista de países
-  nuevoPais: string = ''; // Variable para el nuevo país
+  paises: any[] = []; 
+  nuevoPais: string = ''; 
+  isModalOpen = false; 
+  paisEditando: any = null; 
 
   constructor(private supabase: SupabaseService) {}
 
   async ngOnInit() {
-    await this.loadPaises(); // Cargar países al iniciar
+    await this.loadPaises();
   }
 
-  // Cargar la lista de países desde Supabase
   async loadPaises() {
     const { data, error } = await this.supabase
       .getSupabaseClient()
@@ -30,21 +31,19 @@ export class PaisesComponent implements OnInit {
     else this.paises = data || [];
   }
 
-  // Agregar un nuevo país
   async addPais() {
-    if (!this.nuevoPais) return; // Validar que el campo no esté vacío
-    const { data, error } = await this.supabase
+    if (!this.nuevoPais) return;
+    const { error } = await this.supabase
       .getSupabaseClient()
       .from('paises')
       .insert([{ nombre: this.nuevoPais }]);
     if (error) console.error(error);
     else {
-      this.nuevoPais = ''; // Limpiar el campo de entrada
-      await this.loadPaises(); // Recargar la lista de países
+      this.nuevoPais = '';
+      await this.loadPaises();
     }
   }
 
-  // Eliminar un país
   async deletePais(id: number) {
     const { error } = await this.supabase
       .getSupabaseClient()
@@ -52,6 +51,31 @@ export class PaisesComponent implements OnInit {
       .delete()
       .eq('id', id);
     if (error) console.error(error);
-    else await this.loadPaises(); // Recargar la lista de países
+    else await this.loadPaises();
+  }
+
+  openModal(pais: any) {
+    this.paisEditando = { ...pais };
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.paisEditando = null;
+  }
+
+  async editPais() {
+    if (!this.paisEditando.nombre) return;
+    const { error } = await this.supabase
+      .getSupabaseClient()
+      .from('paises')
+      .update({ nombre: this.paisEditando.nombre })
+      .eq('id', this.paisEditando.id);
+
+    if (error) console.error('Error al actualizar país:', error);
+    else {
+      this.closeModal();
+      await this.loadPaises();
+    }
   }
 }

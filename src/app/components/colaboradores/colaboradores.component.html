@@ -5,85 +5,63 @@
   <form (ngSubmit)="addColaborador()" class="mb-6">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
       <div class="relative">
-        <input
-          [(ngModel)]="nuevoColaborador.nombre_completo"
-          name="nombre_completo"
-          type="text"
-          class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-300 focus:border-purple-500"
-          placeholder=" "
-        />
+        <input [(ngModel)]="nuevoColaborador.nombre_completo" name="nombre_completo" type="text"
+          class="peer w-full p-4 bg-white border-2 rounded-md outline-none border-gray-300 focus:border-purple-500"
+          placeholder=" " />
         <label
-          class="absolute text-gray-500 text-base duration-150 transform -translate-y-3 top-5 z-10 origin-[0] left-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
-        >
-          Nombre completo
+          class="absolute text-gray-500 text-base transform -translate-y-3 top-5 left-10 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500">
+          Nombre Completo
         </label>
       </div>
+
       <div class="relative">
-        <input
-          [(ngModel)]="nuevoColaborador.edad"
-          name="edad"
-          type="number"
-          class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-300 focus:border-purple-500"
-          placeholder=" "
-        />
+        <input [(ngModel)]="nuevoColaborador.edad" name="edad" type="number"
+          class="peer w-full p-4 bg-white border-2 rounded-md outline-none border-gray-300 focus:border-purple-500"
+          placeholder=" " />
         <label
-          class="absolute text-gray-500 text-base duration-150 transform -translate-y-3 top-5 z-10 origin-[0] left-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
-        >
+          class="absolute text-gray-500 text-base transform -translate-y-3 top-5 left-10 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500">
           Edad
         </label>
       </div>
+
       <div class="relative">
-        <input
-          [(ngModel)]="nuevoColaborador.telefono"
-          name="telefono"
-          type="text"
-          class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-300 focus:border-purple-500"
-          placeholder=" "
-        />
+        <input [(ngModel)]="nuevoColaborador.telefono" name="telefono" type="tel"
+          class="peer w-full p-4 bg-white border-2 rounded-md outline-none border-gray-300 focus:border-purple-500"
+          placeholder=" " />
         <label
-          class="absolute text-gray-500 text-base duration-150 transform -translate-y-3 top-5 z-10 origin-[0] left-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
-        >
+          class="absolute text-gray-500 text-base transform -translate-y-3 top-5 left-10 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500">
           Teléfono
         </label>
       </div>
+
       <div class="relative">
-        <input
-          [(ngModel)]="nuevoColaborador.email"
-          name="email"
-          type="email"
-          class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-300 focus:border-purple-500"
-          placeholder=" "
-        />
+        <input [(ngModel)]="nuevoColaborador.email" name="email" type="email"
+          class="peer w-full p-4 bg-white border-2 rounded-md outline-none border-gray-300 focus:border-purple-500"
+          placeholder=" " />
         <label
-          class="absolute text-gray-500 text-base duration-150 transform -translate-y-3 top-5 z-10 origin-[0] left-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
-        >
+          class="absolute text-gray-500 text-base transform -translate-y-3 top-5 left-10 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500">
           Email
         </label>
       </div>
+
       <div class="relative">
-        <input
-          [(ngModel)]="nuevoColaborador.empresa_id"
-          name="empresa_id"
-          type="number"
-          class="peer w-full p-4 pt-6 pl-10 pr-4 bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed border-gray-300 focus:border-purple-500"
-          placeholder=" "
-        />
-        <label
-          class="absolute text-gray-500 text-base duration-150 transform -translate-y-3 top-5 z-10 origin-[0] left-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 peer-focus:text-purple-500"
-        >
-          Empresa ID
-        </label>
+        <select [(ngModel)]="nuevoColaborador.empresa_id" name="empresa_id"
+          class="peer w-full p-4 bg-white border-2 rounded-md outline-none border-gray-300 focus:border-purple-500">
+          <option value="" disabled selected>Seleccione una empresa</option>
+          <option *ngFor="let empresa of empresas" [value]="empresa.id">
+            {{ empresa.nombre_comercial }}
+          </option>
+        </select>
       </div>
     </div>
-    <button
-      type="submit"
-      class="mt-4 bg-purple-500 text-white w-full p-3 rounded-lg hover:bg-purple-600 transition duration-300"
-    >
+
+    <button type="submit"
+      class="mt-4 bg-purple-500 text-white w-full p-3 rounded-lg hover:bg-purple-600 transition duration-300">
       Agregar Colaborador
     </button>
   </form>
 
-  <!-- Lista de colaboradores -->
+  <!-- Tabla de colaboradores -->
   <div class="overflow-x-auto">
     <table class="min-w-full bg-white border">
       <thead>
@@ -92,7 +70,7 @@
           <th class="py-2 px-4 border">Edad</th>
           <th class="py-2 px-4 border">Teléfono</th>
           <th class="py-2 px-4 border">Email</th>
-          <th class="py-2 px-4 border">Empresa ID</th>
+          <th class="py-2 px-4 border">Empresa</th>
           <th class="py-2 px-4 border">Acciones</th>
         </tr>
       </thead>
@@ -102,17 +80,48 @@
           <td class="py-2 px-4 border">{{ colaborador.edad }}</td>
           <td class="py-2 px-4 border">{{ colaborador.telefono }}</td>
           <td class="py-2 px-4 border">{{ colaborador.email }}</td>
-          <td class="py-2 px-4 border">{{ colaborador.empresa_id }}</td>
+          <td class="py-2 px-4 border">{{ getNombreEmpresa(colaborador.empresa_id) }}</td>
           <td class="py-2 px-4 border">
-            <button
-              (click)="deleteColaborador(colaborador.id)"
-              class="bg-red-500 text-white p-1 rounded hover:bg-red-600"
-            >
+            <button (click)="openModal(colaborador)" class="bg-blue-500 text-white p-1 rounded hover:bg-blue-600 mr-2">
+              Editar
+            </button>
+            <button (click)="deleteColaborador(colaborador.id)" class="bg-red-500 text-white p-1 rounded hover:bg-red-600">
               Eliminar
             </button>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+<!-- Modal de Edición -->
+<div *ngIf="isModalOpen" class="fixed inset-0 bg-gray-500/75 flex justify-center items-center">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+    <h3 class="text-lg font-semibold mb-4">Editar Colaborador</h3>
+
+    <label class="block mb-2">Nombre Completo:</label>
+    <input [(ngModel)]="colaboradorEditando.nombre_completo" class="w-full p-2 border rounded-md mb-4" />
+
+    <label class="block mb-2">Edad:</label>
+    <input [(ngModel)]="colaboradorEditando.edad" type="number" class="w-full p-2 border rounded-md mb-4" />
+
+    <label class="block mb-2">Teléfono:</label>
+    <input [(ngModel)]="colaboradorEditando.telefono" type="tel" class="w-full p-2 border rounded-md mb-4" />
+
+    <label class="block mb-2">Email:</label>
+    <input [(ngModel)]="colaboradorEditando.email" type="email" class="w-full p-2 border rounded-md mb-4" />
+
+    <label class="block mb-2">Empresa:</label>
+    <select [(ngModel)]="colaboradorEditando.empresa_id" class="w-full p-2 border rounded-md mb-4">
+      <option *ngFor="let empresa of empresas" [value]="empresa.id">
+        {{ empresa.nombre_comercial }}
+      </option>
+    </select>
+
+    <div class="flex justify-end">
+      <button (click)="editColaborador()" class="bg-green-500 text-white px-4 py-2 rounded mr-2">Guardar</button>
+      <button (click)="closeModal()" class="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
+    </div>
   </div>
 </div>
