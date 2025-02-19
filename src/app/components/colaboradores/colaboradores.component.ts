@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-colaboradores',
@@ -23,7 +24,7 @@ export class ColaboradoresComponent implements OnInit {
   isModalOpen = false;
   colaboradorEditando: any = null;
 
-  constructor(private supabase: SupabaseService) {}
+  constructor(private supabase: SupabaseService,  private router: Router) {}
 
   async ngOnInit() {
     await this.loadColaboradores();
@@ -38,6 +39,11 @@ export class ColaboradoresComponent implements OnInit {
     if (error) console.error('Error al cargar colaboradores:', error);
     else this.colaboradores = data || [];
   }
+  regresarAlDashboard() {
+    this.router.navigate(['/dashboard']); // Redirige al Dashboard
+  }
+
+  
 
   async loadEmpresas() {
     const { data, error } = await this.supabase

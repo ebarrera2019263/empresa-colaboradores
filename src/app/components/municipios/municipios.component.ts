@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-municipios',
@@ -20,7 +21,7 @@ export class MunicipiosComponent implements OnInit {
   isModalOpen = false;
   municipioEditando: any = null;
 
-  constructor(private supabase: SupabaseService) {}
+  constructor(private supabase: SupabaseService, private router: Router) {}
 
   async ngOnInit() {
     await this.loadMunicipios();
@@ -99,5 +100,9 @@ export class MunicipiosComponent implements OnInit {
       this.closeModal();
       await this.loadMunicipios();
     }
+  }
+
+  regresarAlDashboard() {
+    this.router.navigate(['/dashboard']); // Redirige al Dashboard
   }
 }

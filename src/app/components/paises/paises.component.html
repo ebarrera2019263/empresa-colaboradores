@@ -1,3 +1,28 @@
+<div class="flex justify-end">
+  <button 
+    (click)="regresarAlDashboard()"
+    class="invert hover:rotate-2 brightness-150 dark:brightness-100 group hover:shadow-lg hover:shadow-yellow-700/60 transition ease-in-out hover:scale-105 p-1 rounded-2xl bg-gradient-to-br from-yellow-800 via-yellow-600 to-yellow-800 hover:from-yellow-700 hover:via-yellow-800 hover:to-yellow-600"
+  >
+    <div class="px-6 py-2 backdrop-blur-xl bg-black/80 rounded-xl font-semibold w-full h-full">
+      <div class="group-hover:scale-100 flex group-hover:text-yellow-500 text-yellow-600 gap-1">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.8"
+          class="w-6 h-6 stroke-yellow-600 group-hover:stroke-yellow-500"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+          ></path>
+        </svg>
+        Regresar
+      </div>
+    </div>
+  </button>
+</div>
 <div class="flex min-h-screen min-w-full justify-center items-center bg-gray-100 p-4">
   <div class="w-full max-w-2xl bg-white rounded-lg shadow-lg p-6">
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Países</h2>
@@ -47,6 +72,20 @@
     <div class="flex justify-end">
       <button (click)="editPais()" class="bg-green-500 text-white px-4 py-2 rounded mr-2">Guardar</button>
       <button (click)="closeModal()" class="bg-gray-300 px-4 py-2 rounded">Cancelar</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="showToast" class="max-w-xs bg-white border border-gray-200 rounded-xl shadow-lg dark:bg-neutral-800 dark:border-neutral-700 fixed top-5 right-5 z-50">
+  <div class="flex p-4">
+    <div class="shrink-0">
+      <svg class="shrink-0 size-4 text-teal-500 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"></path>
+      </svg>
+    </div>
+    <div class="ms-3">
+      <p id="hs-toast-success-example-label" class="text-sm text-gray-700 dark:text-neutral-400">
+        Pais agregada con éxito.
+      </p>
     </div>
   </div>
 </div>

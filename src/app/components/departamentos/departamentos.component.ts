@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-departamentos',
@@ -17,7 +18,7 @@ export class DepartamentosComponent implements OnInit {
   isModalOpen = false; 
   departamentoEditando: any = null; 
 
-  constructor(private supabase: SupabaseService) {}
+  constructor(private supabase: SupabaseService ,private router: Router) {}
 
   async ngOnInit() {
     await this.loadDepartamentos();
@@ -82,7 +83,9 @@ export class DepartamentosComponent implements OnInit {
     this.departamentoEditando = null;
   }
 
-
+  regresarAlDashboard() {
+    this.router.navigate(['/dashboard']); // Redirige al Dashboard
+  }
   async editDepartamento() {
     if (!this.departamentoEditando.nombre || !this.departamentoEditando.pais_id) return;
     const { error } = await this.supabase

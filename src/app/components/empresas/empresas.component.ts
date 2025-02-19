@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-empresas',
@@ -13,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class EmpresasComponent implements OnInit {
   empresas: any[] = [];
   municipios: any[] = [];
+  showToast = false;
   nuevaEmpresa = {
     nit: '',
     razon_social: '',
@@ -24,11 +26,17 @@ export class EmpresasComponent implements OnInit {
   isModalOpen = false;
   empresaEditando: any = null;
 
-  constructor(private supabase: SupabaseService) {}
+  constructor(private supabase: SupabaseService, private router: Router) {}
 
   async ngOnInit() {
     await this.loadEmpresas();
     await this.loadMunicipios();
+  }
+  mostrarToast() {
+    this.showToast = true;
+    setTimeout(() => {
+      this.showToast = false;
+    }, 3000); // Ocultar el toast después de 3 segundos
   }
 
   async loadEmpresas() {
@@ -54,8 +62,10 @@ export class EmpresasComponent implements OnInit {
       .getSupabaseClient()
       .from('empresas')
       .insert([this.nuevaEmpresa]);
-    if (error) console.error('Error al agregar empresa:', error);
-    else {
+  
+    if (error) {
+      console.error('Error al agregar empresa:', error);
+    } else {
       this.nuevaEmpresa = {
         nit: '',
         razon_social: '',
@@ -65,6 +75,7 @@ export class EmpresasComponent implements OnInit {
         municipio_id: null,
       };
       await this.loadEmpresas();
+      this.mostrarToast(); // Activar el toast después de agregar
     }
   }
 
@@ -91,6 +102,10 @@ export class EmpresasComponent implements OnInit {
   closeModal() {
     this.isModalOpen = false;
     this.empresaEditando = null;
+  }
+
+  regresarAlDashboard() {
+    this.router.navigate(['/dashboard']); // Redirige al Dashboard
   }
 
   async editEmpresa() {

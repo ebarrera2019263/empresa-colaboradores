@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-paises',
@@ -15,11 +16,20 @@ export class PaisesComponent implements OnInit {
   nuevoPais: string = ''; 
   isModalOpen = false; 
   paisEditando: any = null; 
-
-  constructor(private supabase: SupabaseService) {}
+  showToast = false;
+  constructor(private supabase: SupabaseService,private router: Router) {}
 
   async ngOnInit() {
     await this.loadPaises();
+  }
+  regresarAlDashboard() {
+    this.router.navigate(['/dashboard']); // Redirige al Dashboard
+  }
+  mostrarToast() {
+    this.showToast = true;
+    setTimeout(() => {
+      this.showToast = false;
+    }, 3000); // Ocultar el toast después de 3 segundos
   }
 
   async loadPaises() {
@@ -41,6 +51,7 @@ export class PaisesComponent implements OnInit {
     else {
       this.nuevoPais = '';
       await this.loadPaises();
+      this.mostrarToast();
     }
   }
 
